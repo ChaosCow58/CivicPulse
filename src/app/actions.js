@@ -1,12 +1,12 @@
-import prisma from "./prisma";
-import { getSession } from "@auth0/nextjs-auth0";
+import prisma from "@/lib/prisma";
+import { auth0 } from "@/lib/auth";
 
 //////////////////////////////////////////////////////
 // USER ACTIONS
 //////////////////////////////////////////////////////
 
 export async function getOrCreateUser() {
-  const session = await getSession();
+  const session = await auth0.getSession();
 
   if (!session) throw new Error("Unauthorized");
 
