@@ -1,5 +1,5 @@
 generator client {
-  provider = "prisma-client"
+  provider = "prisma-client-js"
   output   = "../src/generated/prisma"
 }
 
@@ -7,6 +7,71 @@ datasource db {
   provider = "mongodb"
 }
 
-model users {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
+//////////////////////////////////////////////////////
+// USER (Auth0-linked application profile)
+//////////////////////////////////////////////////////
+
+model User {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  auth0Id     String   @unique
+  email       String
+  username    String?
+
+  role        String   @default("user")
+  reputation  Int      @default(0)
+
+  reports     Report[]
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+//////////////////////////////////////////////////////
+// REPORTS (Citizen submissions)
+//////////////////////////////////////////////////////
+
+model Report {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+
+  type      String
+  severity  Int
+
+  latitude  Float
+  longitude Float
+
+  userId    String   @db.ObjectId
+  user      User     @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+}
+
+//////////////////////////////////////////////////////
+// HOTSPOTS (Computed clusters)
+//////////////////////////////////////////////////////
+
+model Hotspot {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+
+  centerLat     Float
+  centerLng     Float
+
+  reportCount   Int
+  avgSeverity   Float
+  radiusMeters  Int
+
+  updatedAt     DateTime @updatedAt
+}
+
+//////////////////////////////////////////////////////
+// ANALYTICS CACHE (regression-js results)
+//////////////////////////////////////////////////////
+
+model Analytics {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+
+  metric        String   // "report_trend", etc.
+  value         Float
+  metadata      String?  // JSON string if needed
+
+  updatedAt     DateTime @updatedAt
 }
