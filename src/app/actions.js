@@ -5,11 +5,7 @@ import { auth0 } from "@/lib/auth";
 // USER ACTIONS
 //////////////////////////////////////////////////////
 
-export async function getOrCreateUser() {
-  const session = await auth0.getSession();
-
-  if (!session) throw new Error("Unauthorized");
-
+export async function getOrCreateUser(session) {
   const auth0Id = session.user.sub;
 
   let user = await prisma.user.findUnique({
