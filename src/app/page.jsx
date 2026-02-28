@@ -1,5 +1,6 @@
 import React from 'react';
 import { MapPin, ArrowRight, Radio, Target, BarChart3, Users } from 'lucide-react';
+import LoginButton from '../components/auth/LoginButton';
 
 export default function CivicPulseLanding() {
   return (
@@ -15,7 +16,7 @@ export default function CivicPulseLanding() {
           <span className="text-xl font-semibold tracking-tight">CivicPulse</span>
         </div>
         <button className="bg-blue-600 hover:bg-blue-700 transition-colors px-6 py-2 rounded-lg font-medium text-sm">
-          Sign In
+          <LoginButton />
         </button>
       </nav>
 
