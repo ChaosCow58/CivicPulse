@@ -1,26 +1,17 @@
-import { NextResponse } from "next/server";
+import { auth0 } from "./lib/auth.js";
 
-export function proxy(request) {
-  const token = request.cookies.get("token");
-
-  const headers = new Headers(request.headers);
-
-  if (token) {
-    headers.set(
-      "Authorization",
-      `Bearer ${token.value}`
-    );
-  }
-
-  return NextResponse.rewrite(
-    new URL(
-      "http://localhost:5000" + request.nextUrl.pathname,
-      request.url
-    ),
-    { request: { headers } }
-  );
+export async function proxy(request) {
+  return await auth0.middleware(request);
 }
 
 export const config = {
-  matcher: "/api/:path*",
+  matcher: [
+    /*
+     * Match all request paths except for the ones starting with:
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico, sitemap.xml, robots.txt (metadata files)
+     */
+    "/((?!_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)",
+  ],
 };
