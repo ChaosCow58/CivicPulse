@@ -30,19 +30,19 @@ model User {
 //////////////////////////////////////////////////////
 // REPORTS (Citizen submissions)
 //////////////////////////////////////////////////////
-enum REPORT_TYPE {
-  road_issue
-  public_safety
-  sanitation
-  water_issue
-  crime
-  other
+enum ReportType {
+  ROAD_ISSUE
+  PUBLIC_SAFETY
+  SANITATION
+  WATER_ISSUE
+  CRIME
+  OTHER
 }
 
 model Report {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
 
-  type      REPORT_TYPE
+  type      ReportType
   severity  Int
 
   latitude  Float
