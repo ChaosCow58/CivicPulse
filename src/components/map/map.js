@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import L from "leaflet";
 import 'leaflet-control-geocoder';
 import { useModal } from "@/components/reports/ModalContext";
+import { setLatLng } from "@/lib/latlng.js";
 
 export default function Map() {
   const containerRef = useRef(null);
@@ -142,19 +143,12 @@ export default function Map() {
           .setLatLng(e.latlng)
           .setContent(container)
           .openOn(mapRef.current);
+
+        const { lat, lng } = popup.getLatLng();
+        setLatLng(lat, lng);
       }
 
-      /*function onMapClick(e) {
-          popup
-              .setLatLng(e.latlng)
-              .setContent("TEST MESSAGE")
-              .openOn(mapRef.current);
-      }*/
-
       mapRef.current.on('click', onMapClick);
-
-
-
       setMounted(true);
     } catch (err) {
       // surface initialization errors to the page so they can be debugged in the browser
