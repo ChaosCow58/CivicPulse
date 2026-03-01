@@ -31,3 +31,13 @@ export async function isAuthenticated(request) {
 
     return session;
 }
+
+export async function isAPIAuthenticated(request) {
+    const session = await auth0.getSession(request);
+
+    if (!session) {
+        return null;
+    }
+
+    return session;
+}
