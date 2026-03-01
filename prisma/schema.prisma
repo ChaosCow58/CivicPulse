@@ -76,34 +76,3 @@ model Comment {
 
   createdAt DateTime @default(now())
 }
-
-//////////////////////////////////////////////////////
-// HOTSPOTS (Computed clusters)
-//////////////////////////////////////////////////////
-
-model Hotspot {
-  id            String   @id @default(auto()) @map("_id") @db.ObjectId
-
-  centerLat     Float
-  centerLng     Float
-
-  reportCount   Int
-  avgSeverity   Float
-  radiusMeters  Int
-
-  updatedAt     DateTime @updatedAt
-}
-
-//////////////////////////////////////////////////////
-// ANALYTICS CACHE (regression-js results)
-//////////////////////////////////////////////////////
-
-model Analytics {
-  id            String   @id @default(auto()) @map("_id") @db.ObjectId
-
-  metric        String   // "report_trend", etc.
-  value         Float
-  metadata      String?  // JSON string if needed
-
-  updatedAt     DateTime @updatedAt
-}
