@@ -21,7 +21,6 @@ model User {
   reputation  Int      @default(0)
 
   reports     Report[]
-  comments    Comment[]
 
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -52,27 +51,8 @@ model Report {
   userId    String   @db.ObjectId
   user      User     @relation(fields: [userId], references: [id])
 
-  comments  Comment[]
-
   description String
   isResolved Boolean  @default(false)
-
-  createdAt DateTime @default(now())
-}
-
-//////////////////////////////////////////////////////
-// COMMENTS (Discussion on reports)
-///////////////////////////////////////////////////////
-model Comment {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-
-  reportId  String   @db.ObjectId
-  report    Report   @relation(fields: [reportId], references: [id])
-
-  userId    String   @db.ObjectId
-  user      User     @relation(fields: [userId], references: [id])
-
-  content   String
 
   createdAt DateTime @default(now())
 }
