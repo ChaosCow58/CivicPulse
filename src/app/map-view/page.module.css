@@ -1,0 +1,66 @@
+.main {
+  height: 100vh; /* Fill the viewport */
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Container */
+.leaflet-control-geocoder {
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Search icon button */
+.leaflet-control-geocoder-icon {
+  background-color: #fff;
+  width: 36px;
+  height: 36px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.leaflet-control-geocoder-icon:hover {
+  background-color: #f4f4f4;
+}
+
+/* Text input */
+.leaflet-control-geocoder-form input {
+  width: 250px;
+  height: 36px;
+  padding: 0 10px;
+  font-size: 14px;
+  border: none;
+  outline: none;
+  border-radius: 0 4px 4px 0;
+  color: #333;
+}
+
+/* Results dropdown */
+.leaflet-control-geocoder-alternatives {
+  width: 100%;
+  background: #fff;
+  border-top: 1px solid #eee;
+  border-radius: 0 0 4px 4px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Individual result */
+.leaflet-control-geocoder-alternatives li {
+  padding: 8px 10px;
+  font-size: 13px;
+  color: #333;
+  cursor: pointer;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.leaflet-control-geocoder-alternatives li:hover {
+  background-color: #f4f4f4;
+}
+
+/* Selected/active result */
+.leaflet-control-geocoder-alternatives li.leaflet-control-geocoder-selected {
+  background-color: #e8f0fe;
+}
