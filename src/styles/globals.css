@@ -1,0 +1,50 @@
+@import "tailwindcss";
+@import "leaflet/dist/leaflet.css";
+@import "leaflet-control-geocoder/dist/Control.Geocoder.css";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #ffffff;
+    --foreground: #171717;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.leaflet-container img {
+  max-width: none !important;
+  max-height: none !important;
+  overflow: hidden !important;
+}
+
+.leaflet-container {
+  background: var(--background);
+}
+
+/* Map container baseline (avoid black fill showing through) */
+.leaflet-container { background: #f0f2f5; }
+
+/* If any app-global overlays cover tiles, lower their opacity or z-index */
+.leaflet-container img.leaflet-tile { z-index: 0; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
