@@ -56,37 +56,17 @@ export default function Map({ data }) {
             var geocoder = L.Control.geocoder({
                 defaultMarkGeocode: false,
             })
-                .on("markgeocode", function (e) {
-                    var osm_id = e.geocode.properties.osm_id;
-                    var osm_type = e.geocode.properties.osm_type; // 'relation', 'way', 'node'
+            .on("markgeocode", function (e) {
+                const bbox = e.geocode.bbox;   // Leaflet LatLngBounds
+                const center = e.geocode.center;
 
-                    // Map osm_type to letter
-                    const typeMap = { relation: "R", way: "W", node: "N" };
-                    var osmLetter = typeMap[osm_type];
-
-                    // Fetch the full polygon geometry
-                    fetch(
-                        `https://nominatim.openstreetmap.org/lookup?osm_ids=${osmLetter}${osm_id}&polygon_geojson=1&format=json`,
-                    )
-                        .then((res) => res.json())
-                        .then((data) => {
-                            if (polygonRef.current) polygonRef.current.remove();
-
-                            var geojson = data[0].geojson;
-
-                            polygonRef.current = L.geoJSON(geojson, {
-                                style: {
-                                    color: "#3388ff",
-                                    weight: 2,
-                                    fillColor: "#3388ff",
-                                    fillOpacity: 0.1,
-                                },
-                            }).addTo(mapRef.current);
-
-                            mapRef.current.fitBounds(polygonRef.current.getBounds());
-                        });
-                })
-                .addTo(mapRef.current);
+                if (bbox) {
+                    mapRef.current.fitBounds(bbox);
+                } else {
+                    mapRef.current.setView(center, 14);
+                }
+            })
+            .addTo(mapRef.current);
 
             tileLayer.on("tileload", () => setTilesLoaded((n) => n + 1));
             tileLayer.on("tileload", (ev) => {
