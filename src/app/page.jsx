@@ -37,7 +37,7 @@ export default function CivicPulseLanding() {
         {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 relative z-20">
           <button className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 hover:shadow-lg hover:shadow-blue-200 transition-all px-10 py-4 rounded-full text-white font-bold shadow-md">
-            <Link href="/map-view">View Live Map</Link>
+            <Link href="/map">View Live Map</Link>
             <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
           </button>
         </div>

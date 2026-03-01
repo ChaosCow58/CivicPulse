@@ -5,7 +5,7 @@ import { getOrCreateUser } from "@/app/actions";
 import { redirect } from "next/navigation";
 
 export const auth0 = new Auth0Client({
-    signInReturnToPath: "/dashboard",
+    signInReturnToPath: "/map",
 
     onCallback: async (error, context, session) => {
         if (error) {
@@ -17,7 +17,7 @@ export const auth0 = new Auth0Client({
         getOrCreateUser(session);
 
         return NextResponse.redirect(
-            new URL(context.returnTo || "/dashboard", process.env.APP_BASE_URL)
+            new URL(context.returnTo || "/map", process.env.APP_BASE_URL)
         );
     },
 });
