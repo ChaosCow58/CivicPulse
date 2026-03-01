@@ -1,5 +1,7 @@
 import React from 'react';
 import { MapPin, ArrowRight } from 'lucide-react';
+import LoginButton from '@/components/auth/LoginButton';
+import Link from 'next/link';
 
 export default function CivicPulseLanding() {
   return (
@@ -15,8 +17,8 @@ export default function CivicPulseLanding() {
           </div>
           <span className="text-xl font-bold tracking-tight text-slate-800">CivicPulse</span>
         </div>
-        <button className="text-slate-600 hover:text-blue-600 transition-colors font-semibold text-sm px-4">
-          Sign In
+          <button className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 hover:shadow-lg hover:shadow-blue-200 transition-all px-5 py-2 rounded-full text-white font-bold shadow-md">
+          <LoginButton />
         </button>
       </nav>
 
@@ -35,11 +37,7 @@ export default function CivicPulseLanding() {
         {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 relative z-20">
           <button className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 hover:shadow-lg hover:shadow-blue-200 transition-all px-10 py-4 rounded-full text-white font-bold shadow-md">
-            <MapPin size={18} />
-            Report an Issue
-          </button>
-          <button className="flex items-center justify-center gap-2 bg-white hover:bg-slate-50 border border-slate-200 transition-all px-10 py-4 rounded-full text-slate-700 font-bold group shadow-sm">
-            View Live Map
+            <Link href="/map-view">View Live Map</Link>
             <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
           </button>
         </div>
@@ -61,3 +59,4 @@ export default function CivicPulseLanding() {
     </div>
   );
 }
+Map
