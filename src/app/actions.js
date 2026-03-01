@@ -62,6 +62,24 @@ export async function getReports() {
     });
 }
 
+export async function increaseReportVote(reportId) {
+    return await prisma.report.update({
+        where: { id: reportId },
+        data: {
+            votes: { increment: 1 }
+        }
+    })
+}
+
+export async function resolveReport(reportId) {
+    return await prisma.report.update({
+        where: { id: reportId },
+        data: {
+            isResolved: true
+        }
+    })
+}
+
 /////////////////////////////////////////////////////
 // COMMENT ACTIONS
 /////////////////////////////////////////////////////
