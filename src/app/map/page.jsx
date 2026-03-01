@@ -3,6 +3,8 @@ import styles from './page.module.css';
 import Map from '@/components/map/MapWrapper';
 import CreateReportModal from '@/components/reports/CreateReportModal';
 import { ModalProvider } from "@/components/reports/ModalContext";
+import ReloadButton from '@/components/ui/ReloadButton';
+import ProfileButton from '@/components/ui/ProfileButton';
 
 const loadMapData = async () => {
     try {
@@ -24,13 +26,15 @@ const loadMapData = async () => {
     }
 }
 
-export default async function Home() {
-    return (
-        <main className={styles.main}>
-            <ModalProvider>
-                <Map />
-                <CreateReportModal />
-            </ModalProvider>
-        </main>
-    );
+export default async function Home() {  
+  return (
+    <main className={styles.main}>
+      <ModalProvider>
+        <ReloadButton />
+        <ProfileButton />
+        <Map />
+        <CreateReportModal />
+      </ModalProvider>
+    </main>
+  );
 }
