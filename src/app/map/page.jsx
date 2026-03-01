@@ -5,10 +5,11 @@ import CreateReportModal from '@/components/reports/CreateReportModal';
 import { ModalProvider } from "@/components/reports/ModalContext";
 import ReloadButton from '@/components/ui/ReloadButton';
 import ProfileButton from '@/components/ui/ProfileButton';
+import cron from 'node-cron';
 
-const loadMapData = async () => {
+const getReportsData = async () => {
     try {
-        const response = await fetch("/api/reports", {
+        const response = await fetch(process.env.APP_BASE_URL + "/api/reports/", {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -26,15 +27,38 @@ const loadMapData = async () => {
     }
 }
 
-export default async function Home() {  
-  return (
-    <main className={styles.main}>
-      <ModalProvider>
-        <ReloadButton />
-        <ProfileButton />
-        <Map />
-        <CreateReportModal />
-      </ModalProvider>
-    </main>
-  );
+const autoRefreshMap = () => {
+    cron.schedule('*/1 * * * *', async () => {
+        console.log('Auto-refreshing map data...');
+        try {
+            await renderMapData();
+            console.log('Map data refreshed successfully.');
+        } catch (error) {
+            console.error('Error refreshing map data:', error);
+            throw error;
+        }
+    });
+}
+
+const renderMapData = async () => {
+    try {
+        const data = await getReportsData();
+    } catch (error) {
+        console.error("Error rendering map data:", error);
+        throw error;
+    }
+}
+
+export default async function Home() {
+    const data = await getReportsData();
+    return (
+        <main className={styles.main}>
+            <ModalProvider>
+                <ReloadButton />
+                <ProfileButton />
+                <Map data={data} />
+                <CreateReportModal />
+            </ModalProvider>
+        </main>
+    );
 }

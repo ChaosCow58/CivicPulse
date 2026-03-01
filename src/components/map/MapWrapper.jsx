@@ -4,6 +4,6 @@ import dynamic from 'next/dynamic';
 
 const Map = dynamic(() => import('./map'), { ssr: false });
 
-export default function MapWrapper() {
-  return <Map />;
+export default function MapWrapper({ data }) {
+  return <Map data={data} />;
 }

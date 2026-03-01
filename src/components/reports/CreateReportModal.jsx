@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Modal from "@/components/reports/Modal";
 import { useModal } from "@/components/reports/ModalContext";
-import { getLatLng } from "@/lib/latlng";
+import { getLatLng } from "@/lib/map";
 
 export default function CreateReportModal() {
     const { isOpen, setIsOpen } = useModal();
