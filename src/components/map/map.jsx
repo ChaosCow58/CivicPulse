@@ -111,18 +111,6 @@ export default function Map({ data }) {
                     report.style.color = '#3388ff';
                 });
 
-                const view = L.DomUtil.create('button', '', container);
-                view.innerText = 'View Nearby Reports';
-                view.style.cssText = buttonStyle;
-                view.addEventListener('mouseover', () => {
-                    view.style.background = '#3388ff';
-                    view.style.color = 'white';
-                });
-                view.addEventListener('mouseout', () => {
-                    view.style.background = 'white';
-                    view.style.color = '#3388ff';
-                });
-
                 L.DomEvent.on(report, 'click', async () => {
                     const response = await fetch("/api/reports/auth", {
                         method: "GET",
@@ -134,9 +122,6 @@ export default function Map({ data }) {
                     } else {
                         window.location.href = "/auth/login";
                     }
-                });
-                L.DomEvent.on(view, 'click', () => {
-                    alert("VIEW clicked!");
                 });
 
                 popup
@@ -168,12 +153,33 @@ export default function Map({ data }) {
 
     function createDatapoint(report) {
         const circle = L.circle([report.latitude, report.longitude], {
-            radius: 100,
-            color: '#3388ff',
-            fillColor: '#3388ff',
+            radius: 25,
+            color: fillColor(report.type),
+            fillColor: fillColor(report.type),
             fillOpacity: 0.5
         }).addTo(mapRef.current);
-        circle.bindPopup("Report: " + report.description);
+        circle.bindPopup(report.type + ": " + report.description);
+    }
+
+    function fillColor(type) {
+            if (type === 'ROAD_ISSUE') {
+                return 'green';
+            }
+            if (type === 'PUBLIC_SAFETY') {
+                return 'red';
+            }
+            if (type === 'SANITATION') {
+                return 'yellow';
+            }
+            if (type === 'WATER_ISSUE') {
+                return 'blue';
+            }
+            if (type === 'CRIME') {
+                return 'orange';
+            }
+            if (type === 'OTHER') {
+                return 'purple';
+            }
     }
 
     useEffect(() => {
