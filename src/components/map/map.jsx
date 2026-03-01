@@ -273,10 +273,42 @@ export default function Map({ data }) {
                     el.style.background = base;
                     el.style.color = "white";
                 });
+            });
 
-                el.addEventListener("click", () => {
-                    alert(`${el.innerText} clicked!`);
-                });
+            upVoteBtn.addEventListener("click", async () => {
+                try {
+                    const response = await fetch("/api/reports/upVote", {
+                        method: "POST",
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(report),
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    window.location.reload();
+                } catch (error) {
+                    console.error("Up Vote Btn Error:", error)
+                }
+            });
+
+            resolveBtn.addEventListener("click", async () => {
+                try {
+                    const response = await fetch("/api/reports/resolve", {
+                        method: "POST",
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(report),
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    window.location.reload();
+                } catch (error) {
+                    console.error("Resolve Btn Error:", error)
+                }
             });
         });
 
