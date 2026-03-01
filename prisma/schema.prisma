@@ -44,6 +44,7 @@ model Report {
 
   type      ReportType
   severity  Int
+  votes     Int      @default(0)
 
   latitude  Float
   longitude Float
@@ -53,6 +54,7 @@ model Report {
 
   comments  Comment[]
 
+  description String
   isResolved Boolean  @default(false)
 
   createdAt DateTime @default(now())

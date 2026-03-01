@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import L from "leaflet";
 import 'leaflet-control-geocoder';
+import { useModal } from "@/components/reports/ModalContext";
+import { setLatLng } from "@/lib/latlng.js";
 
 export default function Map() {
   const containerRef = useRef(null);
@@ -12,6 +14,8 @@ export default function Map() {
   const [mounted, setMounted] = useState(false);
   const [tilesLoaded, setTilesLoaded] = useState(0);
   const [tilesFailed, setTilesFailed] = useState(0);
+
+  const { setIsOpen } = useModal();
 
   useEffect(() => {
     if (mapRef.current) return;
@@ -119,8 +123,17 @@ export default function Map() {
           view.style.color = '#3388ff';
         });
 
-        L.DomEvent.on(report, 'click', () => {
-          alert("REPORT clicked!");
+        L.DomEvent.on(report, 'click', async () => {
+          const response = await fetch("/api/reports/auth", {
+            method: "GET",
+            credentials: "include",
+          });
+
+          if (response.ok) {
+            setIsOpen(true);
+          } else {
+            window.location.href = "/auth/login";
+          }
         });
         L.DomEvent.on(view, 'click', () => {
           alert("VIEW clicked!");
@@ -130,19 +143,12 @@ export default function Map() {
           .setLatLng(e.latlng)
           .setContent(container)
           .openOn(mapRef.current);
+
+        const { lat, lng } = popup.getLatLng();
+        setLatLng(lat, lng);
       }
 
-      /*function onMapClick(e) {
-          popup
-              .setLatLng(e.latlng)
-              .setContent("TEST MESSAGE")
-              .openOn(mapRef.current);
-      }*/
-
       mapRef.current.on('click', onMapClick);
-
-      
-
       setMounted(true);
     } catch (err) {
       // surface initialization errors to the page so they can be debugged in the browser
