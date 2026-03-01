@@ -41,7 +41,7 @@ function CreateReportContent({ isOpen, setIsOpen }) {
             body: JSON.stringify(form)
         });
 
-        if (response.ok) setIsOpen(false);
+        if (response.ok) window.location.reload();
     };
     return (
         <div className="flex flex-col items-center justify-center h-screen absolute z-1000">

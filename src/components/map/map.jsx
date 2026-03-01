@@ -85,20 +85,6 @@ export default function Map({ data }) {
 
             var popup = L.popup();
 
-            for (const report of data) {
-                createDatapoint(report);
-            }
-
-            function createDatapoint(report) {
-                const circle = L.circle([report.latitude, report.longitude], {
-                    radius: 100,
-                    color: '#3388ff',
-                    fillColor: '#3388ff',
-                    fillOpacity: 0.5
-                }).addTo(mapRef.current);
-                circle.bindPopup("Report: " + report.description);
-            }
-
             function onMapClick(e) {
                 const container = L.DomUtil.create('div');
 
@@ -179,6 +165,27 @@ export default function Map({ data }) {
             }
         };
     }, []);
+
+    function createDatapoint(report) {
+        const circle = L.circle([report.latitude, report.longitude], {
+            radius: 100,
+            color: '#3388ff',
+            fillColor: '#3388ff',
+            fillOpacity: 0.5
+        }).addTo(mapRef.current);
+        circle.bindPopup("Report: " + report.description);
+    }
+
+    useEffect(() => {
+        if (!mapRef.current) return;
+        if (!data || data.length === 0) return;
+
+        for (const report of data) {
+            createDatapoint(report);
+        }
+
+    }, [data]);
+
 
     return (
         <>
