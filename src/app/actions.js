@@ -39,6 +39,7 @@ export async function createReport(data) {
       severity: Number(data.severity),
       latitude: Number(data.latitude),
       longitude: Number(data.longitude),
+      description: data.description,
       userId: user.id
     }
   });
