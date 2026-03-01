@@ -30,7 +30,7 @@ export default function Map({ data }) {
 
             mapRef.current = L.map(containerRef.current, {
                 zoomAnimation: false,
-            }).setView([49.2125578, 16.62662018], 14);
+            }).setView([37.9485, -91.7715], 14);
 
             const tileLayer = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 maxZoom: 19,
