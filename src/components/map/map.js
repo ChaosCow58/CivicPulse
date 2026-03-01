@@ -82,13 +82,66 @@ export default function Map() {
       var popup = L.popup();
 
       function onMapClick(e) {
+        const container = L.DomUtil.create('div');
+
+        const buttonStyle = `
+          padding: 6px 12px;
+          margin-right: 8px;
+          cursor: pointer;
+          border: 1px solid #3388ff;
+          border-radius: 4px;
+          background: white;
+          color: #3388ff;
+          transition: background 0.2s, color 0.2s;
+        `;
+
+        const report = L.DomUtil.create('button', '', container);
+        report.innerText = 'Make a Report';
+        report.style.cssText = buttonStyle;
+        report.addEventListener('mouseover', () => {
+          report.style.background = '#3388ff';
+          report.style.color = 'white';
+        });
+        report.addEventListener('mouseout', () => {
+          report.style.background = 'white';
+          report.style.color = '#3388ff';
+        });
+
+        const view = L.DomUtil.create('button', '', container);
+        view.innerText = 'View Nearby Reports';
+        view.style.cssText = buttonStyle;
+        view.addEventListener('mouseover', () => {
+          view.style.background = '#3388ff';
+          view.style.color = 'white';
+        });
+        view.addEventListener('mouseout', () => {
+          view.style.background = 'white';
+          view.style.color = '#3388ff';
+        });
+
+        L.DomEvent.on(report, 'click', () => {
+          alert("REPORT clicked!");
+        });
+        L.DomEvent.on(view, 'click', () => {
+          alert("VIEW clicked!");
+        });
+
+        popup
+          .setLatLng(e.latlng)
+          .setContent(container)
+          .openOn(mapRef.current);
+      }
+
+      /*function onMapClick(e) {
           popup
               .setLatLng(e.latlng)
               .setContent("TEST MESSAGE")
               .openOn(mapRef.current);
-      }
+      }*/
 
       mapRef.current.on('click', onMapClick);
+
+      
 
       setMounted(true);
     } catch (err) {
